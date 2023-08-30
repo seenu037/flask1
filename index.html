@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <style>
+
+        .grid-container {
+          display: grid;
+          grid-template-columns: repeat(6, 1fr);
+          grid-gap: 10px;
+          background-color: #d2e0ec;
+          padding: 10px;
+        }
+        
+        .grid-container > div {
+          background-color: rgba(255, 255, 255, 0.8);
+          text-align: center;
+          padding: 20px 0;
+          font-size: 30px;
+        }
+        </style>
+<head>
+    <title>Parking Status</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Parking Status</h1>
+    
+    <div class="grid-container">
+        {% for space in parking_data %}
+        <div class="parking-space" id="space{{ space.id }}">
+             {{ space.id }} - {{ space.status }}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function updateParkingColors() {
+            $.getJSON('/get_parking_data', function(data) {
+                data.forEach(function(space) {
+                    var spaceElement = document.getElementById('space' + space.id);
+                    if (space.status === 'available') {
+                        spaceElement.style.backgroundColor = 'green';
+                    } else if (space.status === 'occupied') {
+                        spaceElement.style.backgroundColor = 'red';
+                    }
+                });
+            });
+        }
+
+        // Update parking colors initially and then periodically
+        updateParkingColors();
+        setInterval(updateParkingColors, 5000); // Refresh every 5 seconds
+    </script>
+</body>
+</html>

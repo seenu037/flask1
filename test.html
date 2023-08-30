@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parking Status</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+parking_data = [
+ {'id': 1, 'status': 'available'},
+ {'id': 2, 'status': 'available'},
+ # ... more parking spaces
+ ] 
+<body>
+    <h1>Parking Status</h1>
+    <div id="parking-container">
+        {% for space in parking_data %}
+        <div class="parking-space" id="space{{ space.id }}">
+            Parking Space {{ space.id }} - {{ space.status }}
+        </div>
+        {% endfor %}
+    </div>
+
+
+</body>
+</html>
